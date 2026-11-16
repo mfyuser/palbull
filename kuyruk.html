@@ -5,18 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kuyruk-Operatör Çağrı İstatistikleri</title>
 
-    <!-- Tailwind CSS -->
+
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Chart.js -->
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
-    <!-- Birincil ve Yedek SheetJS (XLSX) CDN -->
+
     <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
     <script>
         if (typeof XLSX === 'undefined') {
@@ -52,7 +52,7 @@
     </script>
 
     <style>
-        /* Kırmızı & Beyaz Kurumsal Glassmorphism Zemin */
+
         body {
             background-color: #f8fafc;
             background-image:
@@ -124,7 +124,7 @@
             background: rgba(220, 38, 38, 0.55);
         }
 
-        /* PDF / Yazdırma Stili */
+
         @media print {
             body {
                 background: #ffffff !important;
@@ -149,15 +149,15 @@
 </head>
 <body class="min-h-screen antialiased selection:bg-crimson-600 selection:text-white">
 
-    <!-- Bildirim Alanı -->
+
     <div id="toastStack" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2.5 max-w-md w-full pointer-events-none px-4 sm:px-0"></div>
 
-    <!-- Üst Gezinme Çubuğu -->
+
     <header class="glass-navbar sticky top-0 z-30">
         <div class="max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3.5">
                 
-                <!-- Logo ve Başlık -->
+
                 <div class="flex items-center gap-3.5">
                     <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-crimson-600 to-crimson-700 flex items-center justify-center text-white shadow-lg shadow-crimson-600/25 shrink-0">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
@@ -181,9 +181,9 @@
                     </div>
                 </div>
 
-                <!-- Üst Araç Çubuğu -->
+
                 <div class="flex flex-wrap items-center gap-2 no-print">
-                    <!-- Çoklu Sayfa (Sheet) Seçici -->
+
                     <div id="headerSheetWrapper" class="relative hidden">
                         <select id="headerSheetSelect" onchange="switchWorkbookSheet(this.value)" class="appearance-none bg-white/95 border border-crimson-200 text-slate-800 text-xs sm:text-sm font-semibold rounded-xl pl-3.5 pr-8 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-crimson-500/30 cursor-pointer">
                         </select>
@@ -192,7 +192,7 @@
                         </svg>
                     </div>
 
-                    <!-- Sütun Eşleştir & Veri Önizle -->
+
                     <button id="headerMapBtn" onclick="openMappingModal()" class="hidden inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-crimson-700 bg-crimson-50 hover:bg-crimson-100 border border-crimson-200 transition">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
@@ -200,7 +200,7 @@
                         <span>Sütun Eşleştir &amp; Veri Önizle</span>
                     </button>
 
-                    <!-- Örnek Şablon İndir -->
+
                     <button onclick="downloadTemplateXlsx()" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-700 bg-white/90 hover:bg-white border border-slate-200 hover:border-crimson-300 hover:text-crimson-700 shadow-sm transition">
                         <svg class="w-4 h-4 text-crimson-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
@@ -208,7 +208,7 @@
                         <span>Örnek Şablon</span>
                     </button>
 
-                    <!-- Raporu Excel'e Aktar -->
+
                     <button id="headerExportBtn" onclick="exportReportToXlsx()" class="hidden inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
@@ -216,7 +216,7 @@
                         <span>Excel'e Aktar</span>
                     </button>
 
-                    <!-- Yeni Dosya Yükle -->
+
                     <label for="fileInput" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-crimson-600 to-crimson-700 hover:from-crimson-700 hover:to-crimson-800 shadow-md shadow-crimson-600/25 cursor-pointer transition active:scale-[0.99]">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
@@ -225,7 +225,7 @@
                     </label>
                     <input type="file" id="fileInput" accept=".xlsx,.xls,.csv,.tsv,.txt" class="hidden" onchange="handleFileInput(event)">
 
-                    <!-- PDF / Yazdır -->
+
                     <button id="headerPrintBtn" onclick="window.print()" class="hidden inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-700 bg-white/90 hover:bg-white border border-slate-200 hover:text-crimson-700 shadow-sm transition">
                         <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
@@ -237,10 +237,10 @@
         </div>
     </header>
 
-    <!-- Ana İçerik Alanı -->
+
     <main class="max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 print-container">
 
-        <!-- 1. TEMİZ BAŞLANGIÇ EKRANI (SIFIR DEMO VERİ) -->
+
         <section id="welcomeDropzone" class="glass-card rounded-3xl p-8 sm:p-14 border-2 border-dashed border-crimson-300/90 hover:border-crimson-500 text-center max-w-4xl mx-auto my-4 sm:my-10 transition-all no-print">
             <div class="flex flex-col items-center">
                 <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-crimson-600 to-crimson-700 text-white flex items-center justify-center shadow-xl shadow-crimson-600/25 mb-5">
@@ -277,7 +277,7 @@
                     </button>
                 </div>
 
-                <!-- Beklenen 13 Sütun Özeti -->
+
                 <div class="mt-8 pt-6 border-t border-slate-200/70 w-full">
                     <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-3">13 Rapor Sütunu (Sırasıyla)</p>
                     <div class="flex flex-wrap items-center justify-center gap-1.5">
@@ -299,7 +299,7 @@
             </div>
         </section>
 
-        <!-- Tanı / Hata Bilgilendirme Kartı (Sadece sorun oluşursa görünür) -->
+
         <section id="diagnosticAlert" class="hidden glass-card rounded-2xl p-5 sm:p-6 border-l-4 border-l-crimson-600 max-w-4xl mx-auto my-4 no-print">
             <div class="flex items-start justify-between gap-4">
                 <div class="flex items-start gap-3.5">
@@ -330,10 +330,10 @@
             </div>
         </section>
 
-        <!-- 2. YÖNETİCİ GÜNLÜK RAPOR EKRANI (VERİ YÜKLENİNCE AÇILIR) -->
+
         <div id="reportDashboard" class="hidden space-y-6">
 
-            <!-- Üst Bilgi & Hızlı Filtre / Ayar Şeridi -->
+
             <div class="glass-card rounded-2xl px-4 sm:px-5 py-3.5 flex flex-col lg:flex-row lg:items-center justify-between gap-3 no-print">
                 <div class="flex flex-wrap items-center gap-2 text-xs">
                     <span class="px-2.5 py-1 rounded-lg font-bold bg-crimson-600 text-white" id="metaFormatTag">XLSX</span>
@@ -347,13 +347,13 @@
                 </div>
 
                 <div class="flex flex-wrap items-center gap-3">
-                    <!-- Otomatik Ulaşılabilirlik Hesaplama Seçeneği -->
+
                     <label class="inline-flex items-center gap-2 text-xs font-medium text-slate-700 bg-white/90 px-3 py-1.5 rounded-xl border border-slate-200 cursor-pointer select-none" title="Excel'de Ulaşılabilirlik sütunu boş veya 0 ise (Cevaplanmış / Gelen Aramalar) oranından otomatik hesaplar">
                         <input type="checkbox" id="autoCalcReachCheckbox" checked onchange="buildReportFromActiveMapping()" class="rounded text-crimson-600 focus:ring-crimson-500">
                         <span>Boş Ulaşılabilirliği Otomatik Hesapla</span>
                     </label>
 
-                    <!-- Kuyruk Filtresi -->
+
                     <div class="flex items-center gap-2">
                         <label for="queueFilterSelect" class="text-xs font-semibold text-slate-500">Kuyruk:</label>
                         <select id="queueFilterSelect" onchange="refreshDashboardViews()" class="bg-white/95 border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-semibold text-slate-800 focus:outline-none focus:border-crimson-500 cursor-pointer">
@@ -363,10 +363,10 @@
                 </div>
             </div>
 
-            <!-- 6 ADET KPI ÖZET KARTI -->
+
             <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
                 
-                <!-- KPI 1: Toplam Gelen Çağrı -->
+
                 <div class="glass-card rounded-2xl p-4 sm:p-5 relative overflow-hidden">
                     <div class="red-accent-top h-1 w-full absolute top-0 left-0"></div>
                     <div class="flex items-start justify-between gap-2">
@@ -386,7 +386,7 @@
                     </div>
                 </div>
 
-                <!-- KPI 2: Cevaplanan & Ulaşılabilirlik % -->
+
                 <div class="glass-card rounded-2xl p-4 sm:p-5 relative overflow-hidden">
                     <div class="red-accent-top h-1 w-full absolute top-0 left-0"></div>
                     <div class="flex items-start justify-between gap-2">
@@ -411,7 +411,7 @@
                     </div>
                 </div>
 
-                <!-- KPI 3: Kaçan & Geri Dönüş -->
+
                 <div class="glass-card rounded-2xl p-4 sm:p-5 relative overflow-hidden">
                     <div class="red-accent-top h-1 w-full absolute top-0 left-0"></div>
                     <div class="flex items-start justify-between gap-2">
@@ -435,7 +435,7 @@
                     </div>
                 </div>
 
-                <!-- KPI 4: Servis Seviyesi (SLA %) -->
+
                 <div class="glass-card rounded-2xl p-4 sm:p-5 relative overflow-hidden">
                     <div class="red-accent-top h-1 w-full absolute top-0 left-0"></div>
                     <div class="flex items-start justify-between gap-2">
@@ -455,7 +455,7 @@
                     </div>
                 </div>
 
-                <!-- KPI 5: Ort. Konuşma & Ort. Bekleme -->
+
                 <div class="glass-card rounded-2xl p-4 sm:p-5 relative overflow-hidden">
                     <div class="red-accent-top h-1 w-full absolute top-0 left-0"></div>
                     <div class="flex items-start justify-between gap-2">
@@ -479,7 +479,7 @@
                     </div>
                 </div>
 
-                <!-- KPI 6: Başvuruya Dönüşen Çağrı & Dönüşüm % -->
+
                 <div class="glass-card rounded-2xl p-4 sm:p-5 relative overflow-hidden">
                     <div class="red-accent-top h-1 w-full absolute top-0 left-0"></div>
                     <div class="flex items-start justify-between gap-2">
@@ -501,9 +501,9 @@
 
             </section>
 
-            <!-- GRAFİKLER BÖLÜMÜ -->
+
             <section class="grid grid-cols-1 lg:grid-cols-12 gap-5">
-                <!-- Kuyruk Bazlı Çağrı Dağılımı -->
+
                 <div class="glass-card rounded-2xl p-5 sm:p-6 lg:col-span-7 flex flex-col">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
                         <div>
@@ -521,7 +521,7 @@
                     </div>
                 </div>
 
-                <!-- Kuyruk Bazlı SLA & Ulaşılabilirlik Performansı -->
+
                 <div class="glass-card rounded-2xl p-5 sm:p-6 lg:col-span-5 flex flex-col">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
                         <div>
@@ -539,7 +539,7 @@
                 </div>
             </section>
 
-            <!-- TAM 13 SÜTUNLU DETAYLI VERİ TABLOSU -->
+
             <section class="glass-card rounded-2xl p-5 sm:p-6">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                     <div>
@@ -586,7 +586,7 @@
         </div>
     </main>
 
-    <!-- SÜTUN EŞLEŞTİRME & VERİ ÖNİZLEME MODALI -->
+
     <div id="mappingModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/55 backdrop-blur-sm p-4">
         <div class="bg-white rounded-3xl max-w-5xl w-full p-6 sm:p-7 shadow-2xl border border-crimson-100 max-h-[92vh] overflow-y-auto">
             <div class="flex items-start justify-between gap-4 border-b border-slate-100 pb-4">
@@ -602,7 +602,7 @@
                 </button>
             </div>
 
-            <!-- Başlık Satırı Seçimi & Hızlı Sıra Sıfırlama -->
+
             <div class="mt-4 flex flex-col md:flex-row md:items-center justify-between gap-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80">
                 <div>
                     <label for="headerRowIndexSelect" class="block text-xs font-bold text-slate-800">Başlık Satırı Numarası (İlk 30 Satır Taranır)</label>
@@ -617,10 +617,10 @@
                 </div>
             </div>
 
-            <!-- 13 Alan Eşleştirme Izgarası (İlk 2 Örnek Değer ile) -->
+
             <div id="mappingGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-4"></div>
 
-            <!-- Ham Excel İlk 3 Satır Önizlemesi -->
+
             <div class="mt-5">
                 <p class="text-xs font-bold text-slate-700 mb-2">Ham Excel Veri Önizlemesi (Seçili Başlık Altındaki İlk 3 Satır)</p>
                 <div id="rawPreviewBox" class="overflow-x-auto rounded-xl border border-slate-200 bg-slate-50 p-3 text-[11px] font-mono text-slate-700"></div>
@@ -638,11 +638,11 @@
     </div>
 
     <script>
-        // =========================================================================
-        // 1. KESİN 13 SÜTUNLUK ŞEMA & SPESİFİK ANAHTAR KELİME TANIMLARI
-        // =========================================================================
-        // Not: Kısmi çakışmaları önlemek için en uzun/spesifik ifadeler önceliklendirilir
-        // ve her alan için pozitif + negatif (hariç tutulan) kurallar tanımlanır.
+
+
+
+
+
         const COLUMNS_13 = [
             {
                 key: 'totalQueueWaitSec',
@@ -750,15 +750,15 @@
             }
         ];
 
-        // 1..13 sırasıyla UI'da göstermek için sıralı kopya
+
         const COLUMNS_ORDERED = [...COLUMNS_13].sort((a, b) => a.index - b.index);
 
-        let parsedWorkbook = null;       // { fileName, formatType, sheets: { [name]: { formatted: string[][], raw: any[][] } } }
+        let parsedWorkbook = null;
         let activeSheetName = '';
-        let activeFormattedMatrix = [];  // string[][]
-        let activeRawMatrix = [];        // any[][]
+        let activeFormattedMatrix = [];
+        let activeRawMatrix = [];
         let detectedHeaderRowIdx = 0;
-        let activeColumnMap = {};        // { queue: colIndex, offered: colIndex, ... }
+        let activeColumnMap = {};
         let mappingModeLabel = 'Başlık Eşleşmesi';
         let reportRecords = [];
         let sortConfig = { key: 'offered', asc: false };
@@ -766,9 +766,9 @@
         let trafficChartObj = null;
         let slaChartObj = null;
 
-        // =========================================================================
-        // 2. TÜRKÇE METİN NORMALİZASYONU VE BİLDİRİMLER
-        // =========================================================================
+
+
+    
         function normalizeTurkishText(str) {
             if (str === null || str === undefined) return '';
             return String(str)
@@ -802,9 +802,9 @@
             }, 4200);
         }
 
-        // =========================================================================
-        // 3. ÇOK KATMANLI EXCEL / HTML-XLS / CSV OKUYUCU (RAW + FORMATTED)
-        // =========================================================================
+
+
+
         function initDragAndDrop() {
             const zone = document.getElementById('welcomeDropzone');
             if (!zone) return;
@@ -843,7 +843,7 @@
             let sheetsMap = {};
             let detectedFormat = 'XLSX';
 
-            // KATMAN 1: SheetJS ile hem raw (ham sayı/tarih) hem formatted (biçimlendirilmiş metin) matrisleri oku
+
             if (typeof XLSX !== 'undefined') {
                 try {
                     const wb = XLSX.read(uint8, { type: 'array', cellDates: false });
@@ -869,11 +869,11 @@
                 }
             }
 
-            // KATMAN 2: Türk Santral/CRM sistemlerinin HTML-tabanlı .xls veya Windows-1254 CSV dışa aktarımları
+
             if (Object.keys(sheetsMap).length === 0) {
                 const decodedText = decodeTurkishBuffer(uint8);
 
-                // 2A: HTML <table> içeren sahte .xls dosyaları
+
                 if (/<table[\s>]/i.test(decodedText) || /<tr[\s>]/i.test(decodedText)) {
                     const htmlMatrix = parseHtmlTableToMatrix(decodedText);
                     if (htmlMatrix.length > 0) {
@@ -882,7 +882,7 @@
                     }
                 }
 
-                // 2B: Noktalı virgül (;), virgül (,) veya sekme (\t) ayrılmış CSV/TSV
+
                 if (Object.keys(sheetsMap).length === 0) {
                     const csvMatrix = parseDelimitedTextToMatrix(decodedText);
                     if (csvMatrix.length > 0) {
@@ -990,9 +990,9 @@
             showToast(title, true);
         }
 
-        // =========================================================================
-        // 4. AKILLI BAŞLIK SATIRI TARAMASI (İLK 30 SATIR) & ÇAKIŞMASIZ EŞLEŞTİRME
-        // =========================================================================
+
+
+
         function populateSheetDropdown(sheetNames) {
             const wrapper = document.getElementById('headerSheetWrapper');
             const select = document.getElementById('headerSheetSelect');
@@ -1022,7 +1022,7 @@
             buildReportFromActiveMapping();
         }
 
-        // İlk 30 satırı tarar ve birleştirilmiş (merged) üst/alt satır başlıklarını da kontrol eder
+
         function detectBestHeaderRow(matrix) {
             const scanLimit = Math.min(30, matrix.length);
             let bestRow = 0;
@@ -1052,7 +1052,7 @@
                     }
                 });
 
-                // Birden fazla başlık anahtar kelimesi içeren satıra bonus puan ver
+
                 if (matchedFields >= 3) score += matchedFields * 2;
 
                 if (score > bestScore) {
@@ -1061,8 +1061,8 @@
                 }
             }
 
-            // Eğer başlık satırının hemen altında alt-başlık (merged sub-header) varsa kontrol et
-            // (Örn: Üst satırda "Çağrılar" birleştirilmiş, alt satırda "Gelen | Cevaplanmış | Kaçan" yazıyorsa)
+
+
             if (bestRow + 1 < matrix.length) {
                 const nextRowNorm = (matrix[bestRow + 1] || []).map(c => normalizeTurkishText(c));
                 let nextScore = 0;
@@ -1076,7 +1076,7 @@
                 }
             }
 
-            // Hiç başlık eşleşmesi bulunamadıysa, 10+ dolu sütunu olan ilk satırı başlık kabul et
+
             if (bestScore <= 2) {
                 for (let r = 0; r < scanLimit; r++) {
                     const nonEmpty = (matrix[r] || []).filter(c => String(c).trim() !== '').length;
@@ -1087,7 +1087,7 @@
                 }
             }
 
-            // Üst satır birleştirilmiş grup başlığı ise (örn. "Bekleme Süreleri" -> altında "Toplam | Ortalama"), birleştirilmiş etiket oluştur
+
             const currentRow = matrix[bestRow] || [];
             const prevRow = bestRow > 0 ? (matrix[bestRow - 1] || []) : [];
             const mergedCompositeHeaders = currentRow.map((cell, colIdx) => {
@@ -1102,7 +1102,7 @@
             return { headerRowIdx: bestRow, mergedCompositeHeaders };
         }
 
-        // Spesifikten genele çakışmasız eşleştirme + 13 sütun sıra bazlı fallback
+
         function autoMapColumnsSmart(headerRowIdx, compositeHeaders) {
             const rawHeaderRow = activeFormattedMatrix[headerRowIdx] || [];
             const headersToScan = compositeHeaders && compositeHeaders.length ? compositeHeaders : rawHeaderRow;
@@ -1114,8 +1114,8 @@
             const map = {};
             let matchedByNameCount = 0;
 
-            // COLUMNS_13 dizisi en uzun/spesifik ifadelerden en kısaya doğru sıralıdır!
-            // 1. Geçiş: Tam eşleşme (Exact match)
+
+
             COLUMNS_13.forEach(col => {
                 let foundIdx = normPrimary.findIndex((h, idx) =>
                     !usedColIndices.has(idx) && h &&
@@ -1140,7 +1140,7 @@
                 }
             });
 
-            // 2. Geçiş: Kısmi içerik eşleşmesi (Partial match - excludeKeywords korumalı)
+
             COLUMNS_13.forEach(col => {
                 if (map[col.key] !== -1) return;
 
@@ -1165,9 +1165,9 @@
                 }
             });
 
-            // SIRA BAZLI FALLBACK (YEDEK MEKANİZMA):
-            // Eğer başlıkların çoğu eşleşmediyse (ör. farklı dil/kodlanmış başlıklar veya başlık satırı yoksa)
-            // ve tablodaki dolu sütun sayısı 13 civarındaysa (11..15 sütun), 0..12 kesin sırasını uygula.
+
+
+
             const sampleDataRow = activeFormattedMatrix[headerRowIdx + 1] || rawHeaderRow;
             const nonEmptyColCount = Math.max(
                 rawHeaderRow.filter(c => String(c).trim() !== '').length,
@@ -1175,7 +1175,7 @@
             );
 
             if (matchedByNameCount <= 3 && nonEmptyColCount >= 11) {
-                // İlk dolu sütunun indeksini bul (bazı Excel dosyalarında A sütunu boş bırakılmış olabilir)
+
                 let startOffset = 0;
                 for (let c = 0; c < Math.min(4, sampleDataRow.length); c++) {
                     if (String(sampleDataRow[c] || '').trim() !== '' || String(rawHeaderRow[c] || '').trim() !== '') {
@@ -1188,7 +1188,7 @@
                 });
                 mappingModeLabel = `Sıra Bazlı Otomatik (Sütun ${getExcelColumnLetter(startOffset)}..${getExcelColumnLetter(startOffset + 12)})`;
             } else {
-                // Kısmi eşleşmelerde boşta kalan tekil alanlar için kullanılmamış pozisyonel sütunu yedek ata
+
                 COLUMNS_ORDERED.forEach(col => {
                     if (map[col.key] === -1 && col.index < Math.max(rawHeaderRow.length, sampleDataRow.length) && !usedColIndices.has(col.index)) {
                         map[col.key] = col.index;
@@ -1265,7 +1265,7 @@
                     options += `<option value="${c}" ${selected}>Sütun ${colLetter}${headerText}</option>`;
                 }
 
-                // Seçili sütunun ilk 2 örnek veri değerini göster
+
                 const ex1 = (mappedIdx >= 0 && sampleRow1[mappedIdx] !== undefined && sampleRow1[mappedIdx] !== '') ? sampleRow1[mappedIdx] : '—';
                 const ex2 = (mappedIdx >= 0 && sampleRow2[mappedIdx] !== undefined && sampleRow2[mappedIdx] !== '') ? sampleRow2[mappedIdx] : '—';
 
@@ -1286,7 +1286,7 @@
                 grid.appendChild(card);
             });
 
-            // Ham veri önizlemesi (İlk 3 satır)
+
             const previewBox = document.getElementById('rawPreviewBox');
             const sampleRows = activeFormattedMatrix.slice(detectedHeaderRowIdx + 1, detectedHeaderRowIdx + 4);
             if (sampleRows.length === 0) {
@@ -1349,11 +1349,11 @@
             buildReportFromActiveMapping();
         }
 
-        // =========================================================================
-        // 5. ZERO-BUG SAYI, YÜZDE VE SÜRE AYRIŞTIRICILARI (RAW + FORMATTED)
-        // =========================================================================
+
+
+
         function parseZeroBugNumber(formattedVal, rawVal) {
-            // Eğer rawVal doğrudan geçerli bir sonlu sayı ise öncelikle onu kullan
+
             if (typeof rawVal === 'number' && Number.isFinite(rawVal)) {
                 return rawVal;
             }
@@ -1361,11 +1361,11 @@
                 ? String(formattedVal)
                 : String(rawVal ?? '');
 
-            // Gizli boşlukları (\u00A0, \t, \r, \n) ve para/yüzde sembollerini temizle
+
             let s = candidate.replace(/[\u00A0\s%₺$€]+/g, '').trim();
             if (!s || s === '-' || s === '—') return 0;
 
-            // Sadece rakam, nokta, virgül ve eksi işaretini bırak
+
             s = s.replace(/[^0-9.,-]/g, '');
             if (!s || s === '-') return 0;
 
@@ -1373,22 +1373,22 @@
             const hasComma = s.includes(',');
 
             if (hasDot && hasComma) {
-                // Son ayraç hangisiyse o ondalık ayracıdır
+
                 if (s.lastIndexOf(',') > s.lastIndexOf('.')) {
-                    // TR Formatı: 1.234,56 -> 1234.56
+
                     s = s.replace(/\./g, '').replace(',', '.');
                 } else {
-                    // EN Formatı: 1,234.56 -> 1234.56
+
                     s = s.replace(/,/g, '');
                 }
             } else if (hasComma) {
-                // Birden fazla virgül varsa binlik ayraçtır (1,234,567), tek ise ondalıktır (12,5)
+
                 const commaCount = (s.match(/,/g) || []).length;
                 if (commaCount > 1) {
                     s = s.replace(/,/g, '');
                 } else {
                     const parts = s.split(',');
-                    // Eğer virgülden sonra tam 3 basamak varsa ve önünde 1-3 basamak varsa (örn. 1,250) binlik olabilir
+
                     if (parts[1].length === 3 && parts[0].length >= 1 && parts[0].length <= 3 && typeof rawVal === 'number') {
                         return rawVal;
                     }
@@ -1397,11 +1397,11 @@
             } else if (hasDot) {
                 const dotCount = (s.match(/\./g) || []).length;
                 if (dotCount > 1) {
-                    // 1.234.567 -> 1234567
+
                     s = s.replace(/\./g, '');
                 } else {
                     const parts = s.split('.');
-                    // TR binlik nokta kontrolü: örn. "1.420" (tam 3 basamak sağda ve 1-3 basamak solda)
+
                     if (parts[1].length === 3 && parts[0].length >= 1 && parts[0].length <= 3) {
                         s = s.replace('.', '');
                     }
@@ -1410,7 +1410,7 @@
 
             const num = parseFloat(s);
             if (!Number.isFinite(num)) {
-                // Son çare: içindeki saf rakamları birleştir
+
                 const digitsOnly = candidate.replace(/[^0-9]/g, '');
                 return digitsOnly ? parseInt(digitsOnly, 10) : 0;
             }
@@ -1421,7 +1421,7 @@
             const fmtStr = String(formattedVal ?? '').trim();
             const hasPctSymbol = fmtStr.includes('%');
 
-            // Excel raw değeri 0 < rawVal <= 1 arasında ondalık ise (örn. 0.945 -> %94,5)
+
             if (typeof rawVal === 'number' && Number.isFinite(rawVal)) {
                 if (rawVal > 0 && rawVal <= 1) {
                     return rawVal * 100;
@@ -1441,7 +1441,7 @@
         function parseZeroBugDurationSeconds(formattedVal, rawVal) {
             const fmtStr = String(formattedVal ?? '').replace(/[\u00A0]+/g, ' ').trim();
 
-            // 1. Öncelik: Biçimlendirilmiş metinde HH:MM:SS veya MM:SS varsa (24 saati aşan 125:10:05 dahil)
+
             if (fmtStr.includes(':')) {
                 const cleanTime = fmtStr.replace(/[^0-9:.,]/g, '');
                 const parts = cleanTime.split(':').map(p => parseFloat(p.replace(',', '.')) || 0);
@@ -1453,7 +1453,7 @@
                 }
             }
 
-            // 2. Öncelik: Türkçe metin süreleri ("2 sa 15 dk 10 sn", "4 dk 20 sn", "45 sn")
+
             const lowerStr = fmtStr.toLocaleLowerCase('tr-TR');
             if (/[a-zçğıöşü]/.test(lowerStr)) {
                 let total = 0;
@@ -1468,20 +1468,20 @@
                 }
             }
 
-            // 3. Öncelik: Excel ham ondalık gün/saat değeri (örn. 0.045138 -> * 86400)
+
             if (typeof rawVal === 'number' && Number.isFinite(rawVal)) {
                 if (rawVal > 0 && rawVal < 100) {
-                    // Eğer ondalıklı bir Excel zaman seri sayısı ise (örn. 0.125 veya 1.25 gün)
+
                     if (!Number.isInteger(rawVal)) {
                         return Math.round(rawVal * 86400);
                     }
-                    // Tam sayı ise saniye olarak kabul et (örn. 145 -> 145 sn)
+
                     return Math.round(rawVal);
                 }
                 return Math.round(rawVal);
             }
 
-            // 4. Öncelik: Metin içinde ondalık veya tam saniye
+
             const num = parseZeroBugNumber(fmtStr, rawVal);
             if (num > 0 && num < 1 && (fmtStr.includes(',') || fmtStr.includes('.'))) {
                 return Math.round(num * 86400);
@@ -1513,9 +1513,9 @@
             return `${String(m).padStart(2, '0')}:${String(rem).padStart(2, '0')}`;
         }
 
-        // =========================================================================
-        // 6. RAPOR VERİSİNİ DERLEME VE DASHBOARD'U GÜNCELLEME
-        // =========================================================================
+
+
+
         function buildReportFromActiveMapping() {
             if (!activeFormattedMatrix || activeFormattedMatrix.length === 0) return;
 
@@ -1577,7 +1577,7 @@
 
                 const applications = parseZeroBugNumber(getPair('applications').fmt, getPair('applications').raw);
 
-                // Boş satırları ve Excel altındaki özet "Toplam" satırlarını filtrele
+
                 const normQueue = normalizeTurkishText(queue);
                 const isRowEmpty = !queue && offered === 0 && answered === 0 && abandoned === 0 && sla === 0 && talkDurationSec === 0;
                 if (isRowEmpty) return;
@@ -1612,7 +1612,7 @@
 
             reportRecords = records;
 
-            // Ekran geçişleri
+
             document.getElementById('welcomeDropzone').classList.add('hidden');
             document.getElementById('diagnosticAlert').classList.add('hidden');
             document.getElementById('reportDashboard').classList.remove('hidden');
@@ -1633,7 +1633,7 @@
             document.getElementById('metaMappingMode').textContent = mappingModeLabel;
             document.getElementById('metaQueueCount').textContent = `${records.length} Kuyruk Yüklendi`;
 
-            // Kuyruk filtresini doldur
+
             const filterSel = document.getElementById('queueFilterSelect');
             const prevSelection = filterSel.value;
             filterSel.innerHTML = '<option value="ALL">Tüm Kuyruklar</option>';
@@ -1649,9 +1649,9 @@
             showToast(`"${parsedWorkbook.fileName}" başarıyla işlendi (${records.length} kuyruk).`);
         }
 
-        // =========================================================================
-        // 7. KPI KARTLARI, GRAFİKLER VE 13 SÜTUNLU TABLO RENDER İŞLEMLERİ
-        // =========================================================================
+
+
+
         function getActiveFilteredRecords() {
             const selected = document.getElementById('queueFilterSelect').value;
             if (selected === 'ALL') return reportRecords;
@@ -1750,7 +1750,7 @@
         function renderCharts(rows) {
             const labels = rows.map(r => r.queue);
 
-            // 1. Kuyruk Bazlı Çağrı Dağılımı
+
             const ctx1 = document.getElementById('trafficChart').getContext('2d');
             if (trafficChartObj) trafficChartObj.destroy();
             trafficChartObj = new Chart(ctx1, {
@@ -1797,7 +1797,7 @@
                 }
             });
 
-            // 2. Kuyruk Bazlı SLA & Ulaşılabilirlik
+
             const ctx2 = document.getElementById('slaChart').getContext('2d');
             if (slaChartObj) slaChartObj.destroy();
             slaChartObj = new Chart(ctx2, {
@@ -1962,9 +1962,9 @@
             `;
         }
 
-        // =========================================================================
-        // 8. ŞABLON İNDİRME VE İŞLENMİŞ RAPORU EXCEL'E AKTARMA
-        // =========================================================================
+
+
+
         function downloadTemplateXlsx() {
             if (typeof XLSX === 'undefined') {
                 showToast('Excel oluşturma kütüphanesi yüklenemedi. İnternet bağlantınızı kontrol edin.', true);
