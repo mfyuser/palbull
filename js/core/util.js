@@ -28,6 +28,7 @@ const ICONS = {
   swap: '<path d="M7 7h13l-4-4M17 17H4l4 4"/>',
   refresh: '<path d="M21 12a9 9 0 1 1-3-6.7M21 4v5h-5"/>',
   arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+  table: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/>',
   upload: '<path d="M12 16V4M7 9l5-5 5 5M4 20h16"/>'
 };
 PB.icon = (name, size = 22, sw = 1.8) =>
@@ -48,6 +49,9 @@ PB.price = (il, year, month0) => {
   const p = PB.data.prices[il]?.[year]?.[String(month0 + 1).padStart(2, '0')];
   return { k1: p?.k1 || 0, k2: p?.k2 || 0 };
 };
+
+/* Kademe limitleri: limits.json -> il -> {aylik, gunluk}. İsteğe bağlı yıl bazlı geçersiz kılma: il -> "2027": {aylik, gunluk} */
+PB.limit = (il, year) => PB.data.limits[il][year] || PB.data.limits[il];
 
 /* Harici script (xlsx, chart.js) yalnızca gerektiğinde yüklenir */
 const loaded = {};

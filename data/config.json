@@ -38,6 +38,12 @@
    "test": true
   },
   {
+   "id": "limit",
+   "title": "Kademe Limit Tablosu",
+   "desc": "İl ve yıla göre aylık ve günlük kademe limitleri.",
+   "icon": "table"
+  },
+  {
    "id": "zam",
    "title": "Zam Oranı Hesaplama",
    "desc": "Dönemler arası birim fiyat değişimi.",

@@ -20,7 +20,7 @@
       const ay = c.getMonth(), yil = c.getFullYear();
       const sonGun = new Date(yil, ay + 1, 0), bit = sonGun < sonT ? sonGun : sonT;
       const g = bit.getDate() - c.getDate() + 1, ayTuk = g * gToplam;
-      const limit = PB.data.limits[il].gunluk[ay], ikinci = gDaire > limit;
+      const limit = PB.limit(il, yil).gunluk[ay], ikinci = gDaire > limit;
       const p = PB.price(il, yil, ay), fiyat = ikinci ? p.k2 : p.k1;
       rows.push({ ay, yil, g, ayTuk, limit, ikinci, fiyat, tutar: ayTuk * fiyat });
       tutar += ayTuk * fiyat;
@@ -70,7 +70,7 @@
       $('#yil').textContent = yil + ' fiyatları';
       $('#mo').innerHTML = AYLAR.map((a, i) => {
         const p = PB.price(il, yil, i), cls = st.aktif.includes(i) ? (st.durum[i] ? 't2' : 't1') : '';
-        return `<div class="mbox ${cls}"><b>${a}</b>Aylık: ${PB.data.limits[il].aylik[i]} m³<br>Günlük: ${PB.data.limits[il].gunluk[i]}<br><span class="pr">K1: ${p.k1.toFixed(2)}</span><br><span class="pr">K2: ${p.k2.toFixed(2)}</span></div>`;
+        return `<div class="mbox ${cls}"><b>${a}</b>Aylık: ${PB.limit(il, yil).aylik[i]} m³<br>Günlük: ${PB.limit(il, yil).gunluk[i]}<br><span class="pr">K1: ${p.k1.toFixed(2)}</span><br><span class="pr">K2: ${p.k2.toFixed(2)}</span></div>`;
       }).join('');
     }
 

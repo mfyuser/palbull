@@ -91,7 +91,7 @@
 
   /* ---- Açılış ekranı ---- */
   function intro() {
-    const el = $('#intro');
+    const el = $('#intro'); if (!el) return;
     try { if (sessionStorage.getItem('pb-intro') || matchMedia('(prefers-reduced-motion:reduce)').matches) return el.remove(); } catch (e) {}
     try { sessionStorage.setItem('pb-intro', '1'); } catch (e) {}
     let done = false;
