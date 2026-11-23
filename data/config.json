@@ -1,0 +1,59 @@
+{
+ "gecikme": {
+  "aylikFaizYuzde": 3.7,
+  "kdvYuzde": 20
+ },
+ "kademe": {
+  "katsayi": 10.64,
+  "ondalik": 3
+ },
+ "fx": {
+  "url": "https://open.er-api.com/v6/latest/USD",
+  "yenilemeMs": 600000
+ },
+ "modules": [
+  {
+   "id": "gecikme",
+   "title": "Gecikme Bedeli Hesaplama",
+   "desc": "Aylık gecikme oranı 3.7.",
+   "icon": "clock"
+  },
+  {
+   "id": "kademe",
+   "title": "Kademeli Tarife Hesaplama",
+   "desc": "İlk Okuma ve Son Okuma tarihleriyle sm3 veya kcal olarak.",
+   "icon": "steps"
+  },
+  {
+   "id": "kademe2",
+   "title": "Kademeli Tarife Hesaplama V2",
+   "desc": "Yeni Versiyon.",
+   "icon": "steps2"
+  },
+  {
+   "id": "payolcer",
+   "title": "Kademeli Pay Ölçer",
+   "desc": "Hizmet için kullanıma uygun değildir.",
+   "icon": "steps2",
+   "test": true
+  },
+  {
+   "id": "zam",
+   "title": "Zam Oranı Hesaplama",
+   "desc": "Dönemler arası birim fiyat değişimi.",
+   "icon": "trend"
+  },
+  {
+   "id": "iban",
+   "title": "İban Çözümleme",
+   "desc": "Iban Hangi Bankaya Ait.",
+   "icon": "bank"
+  },
+  {
+   "id": "kpr",
+   "title": "Kuyruk Performansı",
+   "desc": "Çağrı kuyruğu Excel raporundan performans özeti.",
+   "icon": "phone"
+  }
+ ]
+}
