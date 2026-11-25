@@ -29,6 +29,22 @@
     return { gun, gToplam, gDaire, rows, tutar };
   }
 
+  /* Müşteriye gönderilecek bilgilendirme notu (V3 sayfası da kullanır). tuk: tüketim cümlelerini içeren metin */
+  function bilgiNotu(r, ilkT, sonT, tuk) {
+    const ilkStr = ilkT.toLocaleDateString('tr-TR'), sonStr = sonT.toLocaleDateString('tr-TR');
+    return `Sayın Müşterimiz;
+${ilkStr} - ${sonStr} tarihleri arasında olan kullanımınıza ilişkin detaylar;
+
+Faturanız ${r.rows.map(x => `${x.g} gün ${AYLAR[x.ay].toLowerCase()} ayından`).join(' ve ')} kullanımı kapsamaktadır. Toplam ${r.gun} günlüktür.
+${tuk}
+
+${r.rows.map(x => `${AYLAR[x.ay]} ayı günlük kademe limiti: ${c3(x.limit)} sm3 tür.`).join('\n')}
+${r.rows.map(x => `${AYLAR[x.ay]} ayı günlük kademe ${x.ikinci ? 'limitini aştınız. (2.kademe)' : 'limitinin altındasınız. (1.kademe)'}`).join('\n')}
+
+Aylık ve günlük kademe limitlerine ve sm3 satış fiyatlarına web sayfamızdan satış tarifeleri sayfasından ulaşabilirsiniz.
+İyi günler dileriz.`;
+  }
+
   function mount(el, v) {
     const iller = Object.keys(PB.data.limits);
     const st = { aktif: [], durum: {}, pay: null };
@@ -119,22 +135,10 @@
          <div class="total">Toplam Tahmini Fatura${toplamMod ? ` (${daire} Daire)` : ''}: ${num(r.tutar * sc)} TL</div>`;
 
       /* bilgilendirme notu */
-      const ilkStr = ilkT.toLocaleDateString('tr-TR'), sonStr = sonT.toLocaleDateString('tr-TR');
       const tuk = toplamMod
         ? `Toplam tüketiminiz: ${c3(toplam)} sm3'tür. Daire sayısı: ${daire}.\nKademe tespiti için toplam tüketiminiz daire sayısına bölünür.\n${c3(toplam)} sm3 / ${daire} daire = ${c3(daireBasi)} sm3 (Daire Başına Tüketim)\nGünlük kullanımın tespiti için daire başına tüketim faturanızdaki gün sayısına bölünür.\n${c3(daireBasi)} sm3 / ${r.gun} gün = ${c3(r.gDaire)} sm3 (Daire Başına Günlük Ortalama Kullanım)`
         : `Toplam tüketiminiz: ${c3(daireBasi)} sm3'tür.\nGünlük kullanımınızın tespiti için kullanımınız faturanızdaki gün sayısına bölünür.\n${c3(daireBasi)} sm3 / ${r.gun} gün = ${c3(r.gDaire)} sm3 (Günlük Ortalama Kullanımınız)`;
-      $('#nt').value =
-`Sayın Müşterimiz;
-${ilkStr} - ${sonStr} tarihleri arasında olan kullanımınıza ilişkin detaylar;
-
-Faturanız ${r.rows.map(x => `${x.g} gün ${AYLAR[x.ay].toLowerCase()} ayından`).join(' ve ')} kullanımı kapsamaktadır. Toplam ${r.gun} günlüktür.
-${tuk}
-
-${r.rows.map(x => `${AYLAR[x.ay]} ayı günlük kademe limiti: ${c3(x.limit)} sm3 tür.`).join('\n')}
-${r.rows.map(x => `${AYLAR[x.ay]} ayı günlük kademe ${x.ikinci ? 'limitini aştınız. (2.kademe)' : 'limitinin altındasınız. (1.kademe)'}`).join('\n')}
-
-Aylık ve günlük kademe limitlerine ve sm3 satış fiyatlarına web sayfamızdan satış tarifeleri sayfasından ulaşabilirsiniz.
-İyi günler dileriz.`;
+      $('#nt').value = bilgiNotu(r, ilkT, sonT, tuk);
 
       aylar();
       if (v.pay) { st.pay = merkezi() ? { il, ilkT, sonT, daire, toplam } : null; $('#pay').hidden = !st.pay; }
@@ -200,5 +204,6 @@ Aylık ve günlük kademe limitlerine ve sm3 satış fiyatlarına web sayfamızd
     };
   }
 
+  PB.kademe = { donem, bilgiNotu, tuketim: (kcal, sm3) => Number(sm3) > 0 ? Number(sm3) : Number(kcal) > 0 ? Number(kcal) / cfg().katsayi : 0, f3, c3 };
   Object.keys(VARIANTS).forEach(id => PB.pages[id] = { mount: el => mount(el, VARIANTS[id]) });
 })();
