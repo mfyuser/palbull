@@ -19,26 +19,20 @@
    "icon": "clock"
   },
   {
-   "id": "kademe",
-   "title": "Kademeli Tarife Hesaplama",
-   "desc": "İlk Okuma ve Son Okuma tarihleriyle sm3 veya kcal olarak.",
-   "icon": "steps"
-  },
-  {
    "id": "kademe2",
-   "title": "Kademeli Tarife Hesaplama V2",
-   "desc": "Yeni Versiyon.",
+   "title": "Kademeli Tarife Hesaplama",
+   "desc": "1.2.",
    "icon": "steps2"
   },
   {
    "id": "kademe3",
-   "title": "Kademeli Tarife Hesaplama V3",
-   "desc": "Canlı hesaplama, ay ay kademe göstergesi, simülasyon ve il karşılaştırması.",
+   "title": "Kademeli Tarife Hesaplama YENİ",
+   "desc": "Yeni Tasarım.",
    "icon": "steps2"
   },
   {
    "id": "payolcer",
-   "title": "Kademeli Pay Ölçer",
+   "title": "Kademeli Tarife Hesaplama + Pay Ölçer",
    "desc": "Hizmet için kullanıma uygun değildir.",
    "icon": "steps2",
    "test": true
@@ -51,7 +45,7 @@
   },
   {
    "id": "zam",
-   "title": "Zam Oranı Hesaplama",
+   "title": "Fiyat Oranı Hesaplama",
    "desc": "Dönemler arası birim fiyat değişimi.",
    "icon": "trend"
   },
@@ -60,12 +54,6 @@
    "title": "İban Çözümleme",
    "desc": "Iban Hangi Bankaya Ait.",
    "icon": "bank"
-  },
-  {
-   "id": "kpr",
-   "title": "Kuyruk Performansı",
-   "desc": "Çağrı kuyruğu Excel raporundan performans özeti.",
-   "icon": "phone"
   }
  ]
 }
